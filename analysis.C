@@ -35,36 +35,211 @@ katherine.melbourne@yale.edu
 
 void plot_peaks()
 {
-  TFile* f1 = new TFile("Production_300959_019_C_p001.root");
+  int nbins = 52;
+  int energy_bins = 200;
+  Double_t peak_window = 20; // 20 keV window
+  Double_t peak_window_338 = 30; // 30 keV window for 338 double peak
+  // 338 keV is a bit special here
+  int energy_bins_338 = int(double(peak_window_338 / peak_window) * energy_bins);
   
-  TTree* t1 = (TTree*)f1->Get("qtree_Energy");
+  //Reading in root file
+  TFile* f1 = new TFile("Production_300959_019_C_p001.root");
 
+  //Defining the tree I want to work in
+  TTree* t1 = (TTree*)f1->Get("qtree_Energy");
+  TTree* t2 = (TTree*)f1->Get("qtree");
+
+  /*
+  //Defining an Energy histogram
   TH1F* Energy_Hist = new TH1F("Energy_Hist", "Energy_Hist", 1000, 0, 3000);
 
+  //Defining individual peak histograms to be filled with cut energy
+  TH1F* Peak2615 = new TH1F("Peak2615", "Peak2615", nbins, 0, 3000);
+  TH1F* Peak969 = new TH1F("Peak969", "Peak969", nbins, 0, 3000);
+  TH1F* Peak911 = new TH1F("Peak911", "Peak911", nbins, 0, 3000);
+  TH1F* Peak583 = new TH1F("Peak583", "Peak583", nbins, 0, 3000);
+  TH1F* Peak338 = new TH1F("Peak338", "Peak338", nbins, 0, 3000);
+  TH1F* Peak239 = new TH1F("Peak239", "Peak239", nbins, 0, 3000);
+
+  //Applying cuts on Energy to separate each peak
+  TCut cut3 = "Energy > 2605";
+  TCut cut4 = "Energy < 2625";
+  TCut cut2615 = cut3 && cut4;
+
+  TCut cut5 = "Energy > 959";
+  TCut cut6 = "Energy < 979";
+  TCut cut969 = cut5 && cut6;
+
+  TCut cut7 = "Energy > 901";
+  TCut cut8 = "Energy < 921";
+  TCut cut911 = cut7 && cut8;
+
+  TCut cut9 = "Energy > 573";
+  TCut cut10 = "Energy < 593";
+  TCut cut583 = cut9 && cut10;
+
+  TCut cut11 = "Energy > 323";
+  TCut cut12 = "Energy < 353";
+  TCut cut338 = cut11 && cut12;
+
+  TCut cut13 = "Energy > 229";
+  TCut cut14 = "Energy < 249";
+  TCut cut239 = cut13 && cut14;
+  
   TCanvas* c2 = new TCanvas("c2", "c2", 600, 600);
 
   gStyle->SetOptStat(0);
+  gStyle->SetOptTitle(0);
+  gStyle->SetLegendBorderSize(1);
+  gStyle->SetLegendFillColor(0);
+
+  TPaveText *pt = new TPaveText(0.7,0.9, 0.3, 1.0, "brNDC");
+  pt->AddText("Title");
+  pt->SetTextSize(.05);
+  pt->SetFillColor(0);
+  pt->SetBorderSize(0);
+
+  TLegend *leg = new TLegend(0.1,0.7,0.3,0.5);
+  leg->AddEntry(Peak2615,"2615 KeV");
+  leg->AddEntry(Peak969,"969 KeV");
+  leg->AddEntry(Peak911,"911 KeV");
+  leg->AddEntry(Peak583,"583 KeV");
+  leg->AddEntry(Peak338,"338 KeV");
+  leg->AddEntry(Peak239,"239 KeV");
+
+  //Filling my energy histogram with "Energy" values from the data
+  // t1->Draw("Energy >> Energy_Hist");
+
+  //Filling peak histograms with Channels that have been altered by cut energy
+  t1->Draw("Energy >> Peak2615", cut2615);
+  t1->Draw("Energy >> Peak969", cut969);
+  t1->Draw("Energy >> Peak911", cut911);
+  t1->Draw("Energy >> Peak583", cut583);
+  t1->Draw("Energy >> Peak338", cut338);
+  t1->Draw("Energy >> Peak239", cut239);
+
+  Peak338->SetLineColor(kAzure);
+  Peak2615->SetLineColor(kSpring);
+  Peak969->SetLineColor(kMagenta);
+  Peak911->SetLineColor(kOrange);
+  Peak583->SetLineColor(kRed);
+  Peak239->SetLineColor(kCyan);
+
+  Peak2615->Draw();
+  Peak969->Draw("SAME");
+  Peak911->Draw("SAME");
+  Peak583->Draw("SAME");
+  Peak338->Draw("SAME");
+  Peak239->Draw("SAME");
   
-  t1->Draw("Energy >> Energy_Hist");
+  pt->Draw("SAME");
+  leg->Draw("SAME");
   
-  Energy_Hist->SetLineColor(kSpring);
+  Peak2615->GetXaxis()->SetTitle("Energy");
+  Peak2615->GetXaxis()->SetRangeUser(0,3000);
+  Peak2615->GetXaxis()->CenterTitle();
+  // Peak2615->GetXaxis()->SetNdivisions(1319, kFALSE);
   
-  Energy_Hist->GetXaxis()->SetTitle("Energy_Hist");
-  Energy_Hist->GetXaxis()->SetRangeUser(0,3000);
-  Energy_Hist->GetXaxis()->SetNdivisions(1000);
-  
-  Energy_Hist->GetYaxis()->SetTitle("Counts");
-  Energy_Hist->GetYaxis()->SetRangeUser(0,500);
+  Peak2615->GetYaxis()->SetTitle("Counts");
+  Peak2615->GetYaxis()->SetRangeUser(0,700);
+  Peak2615->GetYaxis()->CenterTitle();
  
   c2->SetGridx();
   c2->SetTickx();
   c2->SetTicky();
-  c2->BuildLegend();
+  //c2->SetLogy();
+
+  ******************************************************************
   
-  /*
     Used this code to draw a random histogram as a test
   
   TH1F* h1 = new TH1F("h1","Random Gaussian",100,-2,2);
   h1->FillRandom("gaus",10000);
-  h1->Draw();*/ 
+  h1->Draw();*/
+
+  /****************************************************************/
+
+ //Defining individual peak histograms to be filled with cut energy
+  TH1F* Peak2615 = new TH1F("Peak2615", "Peak2615", nbins, 936, 988);
+  TH1F* Peak969 = new TH1F("Peak969", "Peak969", nbins, 936, 988);
+  TH1F* Peak911 = new TH1F("Peak911", "Peak911", nbins, 936, 988);
+  TH1F* Peak583 = new TH1F("Peak583", "Peak583", nbins, 936, 988);
+  TH1F* Peak338 = new TH1F("Peak338", "Peak338", nbins, 936, 988);
+  TH1F* Peak239 = new TH1F("Peak239", "Peak239", nbins, 936, 988);
+
+  /*
+  TCut("RejectBadIntervals");
+  TCut("IsSignal");
+  TCut("NumberofPulses==1");
+  */
+  
+  //Applying cuts on Energy to separate each peak
+  TCut cut3 = "Energy > 2605";
+  TCut cut4 = "Energy < 2625";
+  TCut cut2615 = cut3 && cut4;
+
+  TCut cut5 = "Energy > 959";
+  TCut cut6 = "Energy < 979";
+  TCut cut969 = cut5 && cut6;
+
+  TCut cut7 = "Energy > 901";
+  TCut cut8 = "Energy < 921";
+  TCut cut911 = cut7 && cut8;
+
+  TCut cut9 = "Energy > 573";
+  TCut cut10 = "Energy < 593";
+  TCut cut583 = cut9 && cut10;
+
+  TCut cut11 = "Energy > 323";
+  TCut cut12 = "Energy < 353";
+  TCut cut338 = cut11 && cut12;
+
+  TCut cut13 = "Energy > 229";
+  TCut cut14 = "Energy < 249";
+  TCut cut239 = cut13 && cut14;
+
+  TCanvas* c3 = new TCanvas("c3", "c3", 600, 600);
+
+  gStyle->SetOptStat(0);
+  gStyle->SetOptTitle(0);
+  gStyle->SetLegendBorderSize(1);
+  gStyle->SetLegendFillColor(0);
+
+  //Filling peak histograms with Channels that have been altered by cut energy
+
+  t2->Draw("Channel >> Peak2615", cut2615);
+  t2->Draw("Channel >> Peak969", cut969);
+  t2->Draw("Channel >> Peak911", cut911);
+  t2->Draw("Channel >> Peak583", cut583);
+  t2->Draw("Channel >> Peak338", cut338);
+  t2->Draw("Channel >> Peak239", cut239);
+
+  Peak338->SetLineColor(kAzure);
+  Peak2615->SetLineColor(kSpring);
+  Peak969->SetLineColor(kMagenta);
+  Peak911->SetLineColor(kOrange);
+  Peak583->SetLineColor(kRed);
+  Peak239->SetLineColor(kCyan);
+
+  Peak2615->Draw();
+  Peak969->Draw("SAME");
+  Peak911->Draw("SAME");
+  Peak583->Draw("SAME");
+  Peak338->Draw("SAME");
+  Peak239->Draw("SAME");
+
+  Peak2615->GetXaxis()->SetTitle("Channel");
+  Peak2615->GetXaxis()->SetRangeUser(936,988);
+  Peak2615->GetXaxis()->CenterTitle();
+  Peak2615->GetXaxis()->SetNdivisions(13);
+  
+  Peak2615->GetYaxis()->SetTitle("Counts");
+  Peak2615->GetYaxis()->SetRangeUser(0.1,100);
+  Peak2615->GetYaxis()->CenterTitle();
+
+  c3->SetGridx();
+  c3->SetTickx();
+  c3->SetTicky();
+  c3->SetLogy();
+
 }
