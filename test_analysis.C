@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #ifndef __CINT__
 #endif
 
@@ -55,3 +56,6 @@ void plot_peaks()
 
   c3->SetLogy();
 }
+=======
+
+>>>>>>> 3907c7444ac579badf15ce5d5e48bb637e671e98
