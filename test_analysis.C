@@ -1,3 +1,5 @@
+//Tests new ideas with 1 peak instead of all 6 -- takes much less time!
+
 #ifndef __CINT__
 #endif
 
@@ -57,4 +59,5 @@ void plot_peaks()
   Peak2615->GetYaxis()->SetRangeUser(0.1,1000);
 
   c3->SetLogy();
+  c3->SaveAs("../graphs/test_saved_graph.pdf");
 }
