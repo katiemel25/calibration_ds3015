@@ -1,11 +1,5 @@
-/* This script uses CUORE calibration data to create histograms of different peak energy events within each Tellurium crystal.
-
-To run:
->root
->.L analysis.cpp
->plot_AllString_Th232Peaks(Time)
-
-where "Time" is the total time from the simulation (can be grabbed from the Time histogram from the g4cuore output file)
+/*
+  This script plots all real CUORE calibration histograms on MULTIPLE canvases with a different color and separate graph for each peak.
 
 Written by: Katie Melbourne
 katherine.melbourne@yale.edu
@@ -40,7 +34,7 @@ void plot_peaks()
   int xmax = 988;
 
   QChain * ch = new QChain("qtree");
-  ch->Add("/nfs/cuore1/scratch/shared_output/output/ds3015/calibration_Production_ds3015.list");
+  ch->Add("/nfs/cuore1/scratch/shared_output/output/ds3018_unblinded/calibration_UnblindedReduced_ds3018.list");
 
   //Single-tower file for code testing
   /*
