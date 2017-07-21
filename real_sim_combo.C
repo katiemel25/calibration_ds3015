@@ -166,34 +166,40 @@ void plot_peaks(double Time)
   gStyle->SetLegendFillColor(0);
 
   //creating unique titles for each graph for each peak
-  TPaveText *t2615 = new TPaveText(0.7,0.9, 0.3, 1.0, "brNDC");
+  TPaveText *t2615 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
   t2615->AddText("Peak 2615 Calibration Data");
-  t2615->SetTextSize(.05);
+  t2615->SetTextFont(63);
+  t2615->SetTextSizePixels(18);
   t2615->SetFillColor(0);
   t2615->SetBorderSize(0);
-  TPaveText *t969 = new TPaveText(0.7,0.9, 0.3, 1.0, "brNDC");
+  TPaveText *t969 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
   t969->AddText("Peak 969 Calibration Data");
-  t969->SetTextSize(.05);
+  t969->SetTextFont(63);
+  t969->SetTextSizePixels(18);
   t969->SetFillColor(0);
   t969->SetBorderSize(0);
-  TPaveText *t911 = new TPaveText(0.7,0.9, 0.3, 1.0, "brNDC");
+  TPaveText *t911 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
   t911->AddText("Peak 911 Calibration Data");
-  t911->SetTextSize(.05);
+  t911->SetTextFont(63);
+  t911->SetTextSizePixels(18);
   t911->SetFillColor(0);
   t911->SetBorderSize(0);
-  TPaveText *t583 = new TPaveText(0.7,0.9, 0.3, 1.0, "brNDC");
+  TPaveText *t583 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
   t583->AddText("Peak 583 Calibration Data");
-  t583->SetTextSize(.05);
+  t583->SetTextFont(63);
+  t583->SetTextSizePixels(18);
   t583->SetFillColor(0);
   t583->SetBorderSize(0);
-  TPaveText *t338 = new TPaveText(0.7,0.9, 0.3, 1.0, "brNDC");
+  TPaveText *t338 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
   t338->AddText("Peak 338 Calibration Data");
-  t338->SetTextSize(.05);
+  t338->SetTextFont(63);
+  t338->SetTextSizePixels(18);
   t338->SetFillColor(0);
   t338->SetBorderSize(0);
-  TPaveText *t239 = new TPaveText(0.7,0.9, 0.3, 1.0, "brNDC");
+  TPaveText *t239 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
   t239->AddText("Peak 239 Calibration Data");
-  t239->SetTextSize(.05);
+  t239->SetTextFont(63);
+  t239->SetTextSizePixels(18);
   t239->SetFillColor(0);
   t239->SetBorderSize(0);
 
@@ -239,7 +245,7 @@ void plot_peaks(double Time)
   pad2c3->Draw();
 
   pad1c3->cd();
-  Peak2615->GetXaxis()->SetLabelFont(63);
+   Peak2615->GetXaxis()->SetLabelFont(63);
   Peak2615->GetXaxis()->SetLabelSize(14);
   Peak2615->GetXaxis()->SetRangeUser(0,988);
   Peak2615->GetXaxis()->SetNdivisions(1319, kFALSE);
@@ -252,7 +258,7 @@ void plot_peaks(double Time)
   Peak2615->GetYaxis()->SetLabelSize(14);
   
   Peak2615->Draw();
-  Peak2615->SetLineColor(kRed);
+  Peak2615->SetLineColor(kRed-7);
   Peak2615sim->Draw("SAME");
   Peak2615sim->SetLineColor(kBlack);
 
@@ -269,7 +275,7 @@ void plot_peaks(double Time)
   residuals_2615->GetXaxis()->SetTitleFont(63);
   residuals_2615->GetXaxis()->SetTitleSize(14);
   residuals_2615->GetXaxis()->SetTitleOffset(3);
-  residuals_2615->GetYaxis()->SetTitle("((Real - Sim) / Sim)");
+  residuals_2615->GetYaxis()->SetTitle("Residual");
   residuals_2615->GetYaxis()->SetTitleFont(63);
   residuals_2615->GetYaxis()->SetTitleSize(14);
   residuals_2615->GetYaxis()->SetTitleOffset(1);
@@ -319,7 +325,7 @@ void plot_peaks(double Time)
   Peak969->GetYaxis()->SetLabelSize(14);
   
   Peak969->Draw();
-  Peak969->SetLineColor(kMagenta);
+  Peak969->SetLineColor(kViolet-4);
   Peak969sim->Draw("SAME");
   Peak969sim->SetLineColor(kBlack);
 
@@ -336,7 +342,7 @@ void plot_peaks(double Time)
   residuals_969->GetXaxis()->SetTitleFont(63);
   residuals_969->GetXaxis()->SetTitleSize(14);
   residuals_969->GetXaxis()->SetTitleOffset(3);
-  residuals_969->GetYaxis()->SetTitle("((Real - Sim) / Sim)");
+  residuals_969->GetYaxis()->SetTitle("Residual");
   residuals_969->GetYaxis()->SetTitleFont(63);
   residuals_969->GetYaxis()->SetTitleSize(14);
   residuals_969->GetYaxis()->SetTitleOffset(1);
@@ -386,7 +392,7 @@ void plot_peaks(double Time)
   Peak911->GetYaxis()->SetLabelSize(14);
   
   Peak911->Draw();
-  Peak911->SetLineColor(kBlue);
+  Peak911->SetLineColor(kAzure-3);
   Peak911sim->Draw("SAME");
   Peak911sim->SetLineColor(kBlack);
 
@@ -403,7 +409,7 @@ void plot_peaks(double Time)
   residuals_911->GetXaxis()->SetTitleFont(63);
   residuals_911->GetXaxis()->SetTitleSize(14);
   residuals_911->GetXaxis()->SetTitleOffset(3);
-  residuals_911->GetYaxis()->SetTitle("((Real - Sim) / Sim)");
+  residuals_911->GetYaxis()->SetTitle("Residual");
   residuals_911->GetYaxis()->SetTitleFont(63);
   residuals_911->GetYaxis()->SetTitleSize(14);
   residuals_911->GetYaxis()->SetTitleOffset(1);
@@ -453,7 +459,7 @@ void plot_peaks(double Time)
   Peak583->GetYaxis()->SetLabelSize(14);
   
   Peak583->Draw();
-  Peak583->SetLineColor(kCyan);
+  Peak583->SetLineColor(kCyan-3);
   Peak583sim->Draw("SAME");
   Peak583sim->SetLineColor(kBlack);
 
@@ -470,7 +476,7 @@ void plot_peaks(double Time)
   residuals_583->GetXaxis()->SetTitleFont(63);
   residuals_583->GetXaxis()->SetTitleSize(14);
   residuals_583->GetXaxis()->SetTitleOffset(3);
-  residuals_583->GetYaxis()->SetTitle("((Real - Sim) / Sim)");
+  residuals_583->GetYaxis()->SetTitle("Residual");
   residuals_583->GetYaxis()->SetTitleFont(63);
   residuals_583->GetYaxis()->SetTitleSize(14);
   residuals_583->GetYaxis()->SetTitleOffset(1);
@@ -520,7 +526,7 @@ void plot_peaks(double Time)
   Peak338->GetYaxis()->SetLabelSize(14);
   
   Peak338->Draw();
-  Peak338->SetLineColor(kGreen);
+  Peak338->SetLineColor(kGreen-3);
   Peak338sim->Draw("SAME");
   Peak338sim->SetLineColor(kBlack);
 
@@ -537,7 +543,7 @@ void plot_peaks(double Time)
   residuals_338->GetXaxis()->SetTitleFont(63);
   residuals_338->GetXaxis()->SetTitleSize(14);
   residuals_338->GetXaxis()->SetTitleOffset(3);
-  residuals_338->GetYaxis()->SetTitle("((Real - Sim) / Sim)");
+  residuals_338->GetYaxis()->SetTitle("Residual");
   residuals_338->GetYaxis()->SetTitleFont(63);
   residuals_338->GetYaxis()->SetTitleSize(14);
   residuals_338->GetYaxis()->SetTitleOffset(1);
@@ -587,7 +593,7 @@ void plot_peaks(double Time)
   Peak239->GetYaxis()->SetLabelSize(14);
   
   Peak239->Draw();
-  Peak239->SetLineColor(kYellow);
+  Peak239->SetLineColor(kOrange-3);
   Peak239sim->Draw("SAME");
   Peak239sim->SetLineColor(kBlack);
 
@@ -604,7 +610,7 @@ void plot_peaks(double Time)
   residuals_239->GetXaxis()->SetTitleFont(63);
   residuals_239->GetXaxis()->SetTitleSize(14);
   residuals_239->GetXaxis()->SetTitleOffset(3);
-  residuals_239->GetYaxis()->SetTitle("((Real - Sim) / Sim)");
+  residuals_239->GetYaxis()->SetTitle("Residual");
   residuals_239->GetYaxis()->SetTitleFont(63);
   residuals_239->GetYaxis()->SetTitleSize(14);
   residuals_239->GetYaxis()->SetTitleOffset(1);
@@ -626,5 +632,4 @@ void plot_peaks(double Time)
   residuals_239->Draw("P");
 
    c8->SaveAs("../graphs/ds3018_updated/residuals239.pdf");
-
 }
