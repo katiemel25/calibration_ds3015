@@ -13,6 +13,7 @@
   Written by: Katie Melbourne
   katherine.melbourne@yale.edu
 */
+
 #include "TTree.h"
 #include "TSystem.h"
 #include "TFile.h"
@@ -36,8 +37,8 @@ void plot_peaks(double Time)
   int nbins = 988;
   int xmin = 0;
   int xmax = 988;
-  double ymax = 1000;
-  double ymin = 0.1;
+  //double ymax = 1000;
+  //double ymin = 0.1;
 
   //reading June 2017 calibration simulations
   TFile* f1 = new TFile("06Jun2017_g4cuore.root");
@@ -167,47 +168,48 @@ void plot_peaks(double Time)
 
   //creating unique titles for each graph for each peak
   TPaveText *t2615 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
-  t2615->AddText("Peak 2615 Calibration Data");
+  t2615->AddText("Data and Simulation: 2615 keV peak");
   t2615->SetTextFont(63);
   t2615->SetTextSizePixels(18);
   t2615->SetFillColor(0);
   t2615->SetBorderSize(0);
   TPaveText *t969 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
-  t969->AddText("Peak 969 Calibration Data");
+  t969->AddText("Data and Simulation: 969 keV peak");
   t969->SetTextFont(63);
   t969->SetTextSizePixels(18);
   t969->SetFillColor(0);
   t969->SetBorderSize(0);
   TPaveText *t911 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
-  t911->AddText("Peak 911 Calibration Data");
+  t911->AddText("Data and Simulation: 911 keV peak");
   t911->SetTextFont(63);
   t911->SetTextSizePixels(18);
   t911->SetFillColor(0);
   t911->SetBorderSize(0);
   TPaveText *t583 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
-  t583->AddText("Peak 583 Calibration Data");
+  t583->AddText("Data and Simulation: 583 keV peak");
   t583->SetTextFont(63);
   t583->SetTextSizePixels(18);
   t583->SetFillColor(0);
   t583->SetBorderSize(0);
   TPaveText *t338 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
-  t338->AddText("Peak 338 Calibration Data");
+  t338->AddText("Data and Simulation: 338 keV peak");
   t338->SetTextFont(63);
   t338->SetTextSizePixels(18);
   t338->SetFillColor(0);
   t338->SetBorderSize(0);
   TPaveText *t239 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
-  t239->AddText("Peak 239 Calibration Data");
+  t239->AddText("Data and Simulation: 239 keV peak");
   t239->SetTextFont(63);
   t239->SetTextSizePixels(18);
   t239->SetFillColor(0);
   t239->SetBorderSize(0);
 
   //creating a unique legend for each graph for each peak
-  TLegend *l2615 = new TLegend(0.687,0.090,0.873,0.251);
+  // TLegend *l2615 = new TLegend(0.687,0.090,0.873,0.251); //legend on comparison graph
+  TLegend *l2615 = new TLegend(0.133,0.710,0.281,.0.915);
   l2615->AddEntry(Peak2615sim,"Simulated Data");
   l2615->AddEntry(Peak2615, "Data Set 3018 Unblinded");
-  l2615->SetTextSize(0.03);
+  l2615->SetTextSize(0.0526);
   TLegend *l969 = new TLegend(0.687,0.090,0.873,0.251);
   l969->AddEntry(Peak969sim,"Simulated Data");
   l969->AddEntry(Peak969, "Data Set 3018 Unblinded");
@@ -229,6 +231,8 @@ void plot_peaks(double Time)
   l239->AddEntry(Peak239, "Data Set 3018 Unblinded");
   l239->SetTextSize(0.03);
 
+  Float_t ymax2615 = Peak2615->GetMaximum();
+
   //creating each graph individually on canvases 3-8
   
   TCanvas* c3 = new TCanvas("c3", "c3", 1000, 600);
@@ -245,25 +249,32 @@ void plot_peaks(double Time)
   pad2c3->Draw();
 
   pad1c3->cd();
-   Peak2615->GetXaxis()->SetLabelFont(63);
+  Peak2615->GetXaxis()->SetLabelFont(63);
   Peak2615->GetXaxis()->SetLabelSize(14);
   Peak2615->GetXaxis()->SetRangeUser(0,988);
   Peak2615->GetXaxis()->SetNdivisions(1319, kFALSE);
+  Peak2615->GetXaxis()->SetTickLength(0.05);
   Peak2615->GetYaxis()->SetTitle("Events per Day per Channel");
-  // Peak2615->GetYaxis()->SetRangeUser(ymin, ymax);
+  Peak2615->GetYaxis()->SetRangeUser(0.2, ymax2615+100);
   Peak2615->GetYaxis()->SetTitleFont(63);
   Peak2615->GetYaxis()->SetTitleSize(14);
   Peak2615->GetYaxis()->SetTitleOffset(1);
   Peak2615->GetYaxis()->SetLabelFont(63);
   Peak2615->GetYaxis()->SetLabelSize(14);
-  
+
   Peak2615->Draw();
   Peak2615->SetLineColor(kRed-7);
   Peak2615sim->Draw("SAME");
   Peak2615sim->SetLineColor(kBlack);
 
   t2615->Draw();
-  l2615->Draw();
+
+  for (int i = 52; i <=nbins; i = i+52)
+    {
+      TLine *line2615 = new TLine(i,0.2,i,ymax2615+100);
+      line2615->SetLineStyle(2);
+      line2615->Draw("SAME");
+    }
 
   pad2c3->cd();
   residuals_2615->SetTitle("");
@@ -275,7 +286,7 @@ void plot_peaks(double Time)
   residuals_2615->GetXaxis()->SetTitleFont(63);
   residuals_2615->GetXaxis()->SetTitleSize(14);
   residuals_2615->GetXaxis()->SetTitleOffset(3);
-  residuals_2615->GetYaxis()->SetTitle("Residual");
+  residuals_2615->GetYaxis()->SetTitle("(Simulation-Data)/Data");
   residuals_2615->GetYaxis()->SetTitleFont(63);
   residuals_2615->GetYaxis()->SetTitleSize(14);
   residuals_2615->GetYaxis()->SetTitleOffset(1);
@@ -284,20 +295,19 @@ void plot_peaks(double Time)
   residuals_2615->SetMarkerSize(5);
   
   for (Int_t i = 1; i <= nbins; i++) {
-    if (Peak2615sim->GetBinContent(i) != 0)
+    if (Peak2615->GetBinContent(i) != 0)
       {
-	Double_t diff = (Peak2615->GetBinContent(i) - Peak2615sim->GetBinContent(i)) / Peak2615sim->GetBinContent(i);
-      }
-    else 
-      {
-	Double_t diff = Peak2615->GetBinContent(i);
+	Double_t diff = (Peak2615sim->GetBinContent(i) - Peak2615->GetBinContent(i)) / Peak2615->GetBinContent(i);
       }
     residuals_2615->SetBinContent(i, diff);
   }
   residuals_2615->Draw("P");
 
-  c3->SaveAs("../graphs/ds3018_updated/residuals2615.pdf");
+  l2615->Draw();
+
+  c3->SaveAs("../graphs/ds3018_updated/real_sim_combo_2615_wlines.pdf");
   
+  /*
   TCanvas* c4 = new TCanvas("c4", "c4", 1000, 600);
   c4->cd();
   TPad *pad1c4 = new TPad("pad1c4", "pad1c4", 0, 0.33, 1, 1);
@@ -342,7 +352,7 @@ void plot_peaks(double Time)
   residuals_969->GetXaxis()->SetTitleFont(63);
   residuals_969->GetXaxis()->SetTitleSize(14);
   residuals_969->GetXaxis()->SetTitleOffset(3);
-  residuals_969->GetYaxis()->SetTitle("Residual");
+  residuals_969->GetYaxis()->SetTitle("(Simulation-Data)/Data");
   residuals_969->GetYaxis()->SetTitleFont(63);
   residuals_969->GetYaxis()->SetTitleSize(14);
   residuals_969->GetYaxis()->SetTitleOffset(1);
@@ -351,19 +361,15 @@ void plot_peaks(double Time)
   residuals_969->SetMarkerSize(5);
   
   for (Int_t i = 1; i <= nbins; i++) {
-    if (Peak969sim->GetBinContent(i) != 0)
+    if (Peak969->GetBinContent(i) != 0)
       {
-	Double_t diff = (Peak969->GetBinContent(i) - Peak969sim->GetBinContent(i)) / Peak969sim->GetBinContent(i);
-      }
-    else 
-      {
-	Double_t diff = Peak969->GetBinContent(i);
+	Double_t diff = (Peak969sim->GetBinContent(i) - Peak969->GetBinContent(i)) / Peak969->GetBinContent(i);
       }
     residuals_969->SetBinContent(i, diff);
   }
   residuals_969->Draw("P");
 
-  c4->SaveAs("../graphs/ds3018_updated/residuals969.pdf");
+  c4->SaveAs("../graphs/ds3018_updated/real_sim_combo_969.pdf");
   
   TCanvas* c5 = new TCanvas("c5", "c5", 1000, 600);
   c5->cd();
@@ -409,7 +415,7 @@ void plot_peaks(double Time)
   residuals_911->GetXaxis()->SetTitleFont(63);
   residuals_911->GetXaxis()->SetTitleSize(14);
   residuals_911->GetXaxis()->SetTitleOffset(3);
-  residuals_911->GetYaxis()->SetTitle("Residual");
+  residuals_911->GetYaxis()->SetTitle("(Simulation-Data)/Data");
   residuals_911->GetYaxis()->SetTitleFont(63);
   residuals_911->GetYaxis()->SetTitleSize(14);
   residuals_911->GetYaxis()->SetTitleOffset(1);
@@ -418,19 +424,15 @@ void plot_peaks(double Time)
   residuals_911->SetMarkerSize(5);
   
   for (Int_t i = 1; i <= nbins; i++) {
-    if (Peak911sim->GetBinContent(i) != 0)
+    if (Peak911->GetBinContent(i) != 0)
       {
-	Double_t diff = (Peak911->GetBinContent(i) - Peak911sim->GetBinContent(i)) / Peak911sim->GetBinContent(i);
-      }
-    else 
-      {
-	Double_t diff = Peak911->GetBinContent(i);
+	Double_t diff = (Peak911sim->GetBinContent(i) - Peak911->GetBinContent(i)) / Peak911->GetBinContent(i);
       }
     residuals_911->SetBinContent(i, diff);
   }
   residuals_911->Draw("P");
 
-  c5->SaveAs("../graphs/ds3018_updated/residuals911.pdf");
+  c5->SaveAs("../graphs/ds3018_updated/real_sim_combo_911.pdf");
   
   TCanvas* c6 = new TCanvas("c6", "c6", 1000, 600);
   c6->cd();
@@ -476,7 +478,7 @@ void plot_peaks(double Time)
   residuals_583->GetXaxis()->SetTitleFont(63);
   residuals_583->GetXaxis()->SetTitleSize(14);
   residuals_583->GetXaxis()->SetTitleOffset(3);
-  residuals_583->GetYaxis()->SetTitle("Residual");
+  residuals_583->GetYaxis()->SetTitle("(Simulation-Data)/Data");
   residuals_583->GetYaxis()->SetTitleFont(63);
   residuals_583->GetYaxis()->SetTitleSize(14);
   residuals_583->GetYaxis()->SetTitleOffset(1);
@@ -485,19 +487,15 @@ void plot_peaks(double Time)
   residuals_583->SetMarkerSize(5);
   
   for (Int_t i = 1; i <= nbins; i++) {
-    if (Peak583sim->GetBinContent(i) != 0)
+    if (Peak583->GetBinContent(i) != 0)
       {
-	Double_t diff = (Peak583->GetBinContent(i) - Peak583sim->GetBinContent(i)) / Peak583sim->GetBinContent(i);
-      }
-    else 
-      {
-	Double_t diff = Peak583->GetBinContent(i);
+	Double_t diff = (Peak583sim->GetBinContent(i) - Peak583->GetBinContent(i)) / Peak583->GetBinContent(i);
       }
     residuals_583->SetBinContent(i, diff);
   }
   residuals_583->Draw("P");
 
-  c6->SaveAs("../graphs/ds3018_updated/residuals583.pdf");
+  c6->SaveAs("../graphs/ds3018_updated/real_sim_combo_583.pdf");
 
   TCanvas* c7 = new TCanvas("c7", "c7", 1000, 600);
   c7->cd();
@@ -543,7 +541,7 @@ void plot_peaks(double Time)
   residuals_338->GetXaxis()->SetTitleFont(63);
   residuals_338->GetXaxis()->SetTitleSize(14);
   residuals_338->GetXaxis()->SetTitleOffset(3);
-  residuals_338->GetYaxis()->SetTitle("Residual");
+  residuals_338->GetYaxis()->SetTitle("(Simulation-Data)/Data");
   residuals_338->GetYaxis()->SetTitleFont(63);
   residuals_338->GetYaxis()->SetTitleSize(14);
   residuals_338->GetYaxis()->SetTitleOffset(1);
@@ -552,19 +550,15 @@ void plot_peaks(double Time)
   residuals_338->SetMarkerSize(5);
   
   for (Int_t i = 1; i <= nbins; i++) {
-    if (Peak338sim->GetBinContent(i) != 0)
+    if (Peak338->GetBinContent(i) != 0)
       {
-	Double_t diff = (Peak338->GetBinContent(i) - Peak338sim->GetBinContent(i)) / Peak338sim->GetBinContent(i);
-      }
-    else 
-      {
-	Double_t diff = Peak338->GetBinContent(i);
+	Double_t diff = (Peak338sim->GetBinContent(i) - Peak338->GetBinContent(i)) / Peak338->GetBinContent(i);
       }
     residuals_338->SetBinContent(i, diff);
   }
   residuals_338->Draw("P");
 
-  c7->SaveAs("../graphs/ds3018_updated/residuals338.pdf");
+  c7->SaveAs("../graphs/ds3018_updated/real_sim_combo_338.pdf");
 
   TCanvas* c8 = new TCanvas("c8", "c8", 1000, 600);
   c8->cd();
@@ -610,7 +604,7 @@ void plot_peaks(double Time)
   residuals_239->GetXaxis()->SetTitleFont(63);
   residuals_239->GetXaxis()->SetTitleSize(14);
   residuals_239->GetXaxis()->SetTitleOffset(3);
-  residuals_239->GetYaxis()->SetTitle("Residual");
+  residuals_239->GetYaxis()->SetTitle("(Simulation-Data)/Data");
   residuals_239->GetYaxis()->SetTitleFont(63);
   residuals_239->GetYaxis()->SetTitleSize(14);
   residuals_239->GetYaxis()->SetTitleOffset(1);
@@ -619,17 +613,14 @@ void plot_peaks(double Time)
   residuals_239->SetMarkerSize(5);
   
   for (Int_t i = 1; i <= nbins; i++) {
-    if (Peak239sim->GetBinContent(i) != 0)
+    if (Peak239->GetBinContent(i) != 0)
       {
-	Double_t diff = (Peak239->GetBinContent(i) - Peak239sim->GetBinContent(i)) / Peak239sim->GetBinContent(i);
-      }
-    else 
-      {
-	Double_t diff = Peak239->GetBinContent(i);
+	Double_t diff = (Peak239sim->GetBinContent(i) - Peak239->GetBinContent(i)) / Peak239->GetBinContent(i);
       }
     residuals_239->SetBinContent(i, diff);
   }
   residuals_239->Draw("P");
 
-   c8->SaveAs("../graphs/ds3018_updated/residuals239.pdf");
+   c8->SaveAs("../graphs/ds3018_updated/real_sim_combo_239.pdf");
+   */
 }
