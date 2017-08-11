@@ -26,11 +26,11 @@ void _plotname_()
 
   //defining repeatedly used variables
   int nbins = 988;
-  int xmin = 0;
-  int xmax = 988;
+  int xmin = 1;
+  int xmax = 989;
   double ymax = 2;
   double ymin = -2;
-  int columns = 52;
+  int columns = 1304;
 
   //reading June 2017 calibration simulations
   TFile* f1 = new TFile("06Jun2017_g4cuore.root");
@@ -41,12 +41,12 @@ void _plotname_()
   ch->Add("/nfs/cuore1/scratch/shared_output/output/ds3018_unblinded/calibration_UnblindedReduced_ds3018.list");
 
    //creating empty simulation histograms for each peak
-  TH1F* Peak2615sim = new TH1F("Peak2615sim", "Peak2615sim", nbins, 0, 988);
-  TH1F* Peak969sim = new TH1F("Peak969sim", "Peak969sim", nbins, 0, 988);
-  TH1F* Peak911sim = new TH1F("Peak911sim", "Peak911sim", nbins, 0, 988);
-  TH1F* Peak583sim = new TH1F("Peak583sim", "Peak583sim", nbins, 0, 988);
-  TH1F* Peak338sim = new TH1F("Peak338sim", "Peak338sim", nbins, 0, 988);
-  TH1F* Peak239sim = new TH1F("Peak239sim", "Peak239sim", nbins, 0, 988);
+  TH1F* Peak2615sim = new TH1F("Peak2615sim", "Peak2615sim", nbins, xmin, xmax);
+  TH1F* Peak969sim = new TH1F("Peak969sim", "Peak969sim", nbins, xmin, xmax);
+  TH1F* Peak911sim = new TH1F("Peak911sim", "Peak911sim", nbins, xmin, xmax);
+  TH1F* Peak583sim = new TH1F("Peak583sim", "Peak583sim", nbins, xmin, xmax);
+  TH1F* Peak338sim = new TH1F("Peak338sim", "Peak338sim", nbins, xmin, xmax);
+  TH1F* Peak239sim = new TH1F("Peak239sim", "Peak239sim", nbins, xmin, xmax);
 
   //creating empty real data histograms for each peak
   TH1F* Peak2615 = new TH1F("Peak2615", "Peak2615", nbins, xmin, xmax);
@@ -161,7 +161,7 @@ void _plotname_()
 
   //creating unique titles for each graph for each peak
   TPaveText *t2615 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
-  t2615->AddText("Residuals by Peak in Tower tower_number");
+  t2615->AddText("Tower tower_number");
   t2615->SetTextFont(63);
   t2615->SetTextSizePixels(18);
   t2615->SetFillColor(0);

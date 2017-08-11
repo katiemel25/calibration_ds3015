@@ -211,8 +211,10 @@ void peak_residuals(double Time)
     residuals_2615->SetBinContent(i, diff);
   }
 
-  residuals_2615->SetMarkerColor(kRed-7);
-  residuals_2615->Draw("P");
+  residuals_2615->SetMarkerColor(kBlack);
+  residuals_2615->SetMarkerStyle(20);
+  residuals_2615->SetMarkerSize(3);
+  residuals_2615->Draw();
 
  for (Int_t i = 1; i <= nbins; i++) {
     if (Peak969->GetBinContent(i) != 0)
@@ -226,9 +228,10 @@ void peak_residuals(double Time)
     residuals_969->SetBinContent(i, diff);
  }
 
-  residuals_969->SetMarkerSize(2);
-  residuals_969->SetMarkerColor(kViolet-4);
-  residuals_969->Draw("SAME P");
+  residuals_969->SetMarkerColor(kCyan+4);
+  residuals_969->SetMarkerStyle(20);
+  residuals_969->SetMarkerSize(3);
+  residuals_969->Draw("SAME");;
   
   for (Int_t i = 1; i <= nbins; i++) {
     if (Peak911->GetBinContent(i) != 0)
@@ -243,7 +246,7 @@ void peak_residuals(double Time)
   }
 
   residuals_911->SetMarkerSize(5);
-  residuals_911->SetMarkerColor(kAzure-3);
+  residuals_911->SetMarkerColor(kCyan-1);
   residuals_911->Draw("SAME P");
   
   for (Int_t i = 1; i <= nbins; i++) {
@@ -259,7 +262,7 @@ void peak_residuals(double Time)
   }
 
   residuals_583->SetMarkerSize(5);
-  residuals_583->SetMarkerColor(kCyan-3);
+  residuals_583->SetMarkerColor(kCyan-5);
   residuals_583->Draw("SAME P");
   
   for (Int_t i = 1; i <= nbins; i++) {
@@ -275,7 +278,7 @@ void peak_residuals(double Time)
   }
 
   residuals_338->SetMarkerSize(5);
-  residuals_338->SetMarkerColor(kGreen-3);
+  residuals_338->SetMarkerColor(kCyan-8);
   residuals_338->Draw("SAME P");
   
   for (Int_t i = 1; i <= nbins; i++) {
@@ -291,13 +294,13 @@ void peak_residuals(double Time)
   }
 
   residuals_239->SetMarkerSize(5);
-  residuals_239->SetMarkerColor(kOrange-3);
+  residuals_239->SetMarkerColor(kCyan-10);
   residuals_239->Draw("SAME P");
 
   t2615->Draw("SAME");
   l2615->Draw("SAME");
   
-  c3->SaveAs("../graphs/ds3018_updated/residuals_all.pdf");
+  //c3->SaveAs("../graphs/ds3018_updated/residuals_all_blue.pdf");
 
   //The following code produces a residuals graph that INCLUDES any channels of real data with a value that equals zero.
 

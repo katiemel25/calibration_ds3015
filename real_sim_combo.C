@@ -35,8 +35,8 @@ void plot_peaks(double Time)
 
   //defining repeatedly used variables
   int nbins = 988;
-  int xmin = 0;
-  int xmax = 988;
+  int xmin = 1;
+  int xmax = 989;
   //double ymax = 1000;
   //double ymin = 0.1;
 
@@ -49,20 +49,20 @@ void plot_peaks(double Time)
   ch->Add("/nfs/cuore1/scratch/shared_output/output/ds3018_unblinded/calibration_UnblindedReduced_ds3018.list");
 
   //creating empty simulation histograms for each peak
-  TH1F* Peak2615sim = new TH1F("Peak2615sim", "Peak2615sim", nbins, 0, 988);
-  TH1F* Peak969sim = new TH1F("Peak969sim", "Peak969sim", nbins, 0, 988);
-  TH1F* Peak911sim = new TH1F("Peak911sim", "Peak911sim", nbins, 0, 988);
-  TH1F* Peak583sim = new TH1F("Peak583sim", "Peak583sim", nbins, 0, 988);
-  TH1F* Peak338sim = new TH1F("Peak338sim", "Peak338sim", nbins, 0, 988);
-  TH1F* Peak239sim = new TH1F("Peak239sim", "Peak239sim", nbins, 0, 988);
+  TH1F* Peak2615sim = new TH1F("Peak2615sim", "Peak2615sim", nbins, xmin, xmax);
+  TH1F* Peak969sim = new TH1F("Peak969sim", "Peak969sim", nbins, xmin, xmax);
+  TH1F* Peak911sim = new TH1F("Peak911sim", "Peak911sim", nbins, xmin, xmax);
+  TH1F* Peak583sim = new TH1F("Peak583sim", "Peak583sim", nbins, xmin, xmax);
+  TH1F* Peak338sim = new TH1F("Peak338sim", "Peak338sim", nbins, xmin, xmax);
+  TH1F* Peak239sim = new TH1F("Peak239sim", "Peak239sim", nbins, xmin, xmax);
 
   //creating empty real data histograms for each peak
-  TH1F* Peak2615 = new TH1F("Peak2615", "Peak2615", nbins, xmin, 988);
-  TH1F* Peak969 = new TH1F("Peak969", "Peak969", nbins, xmin, 988);
-  TH1F* Peak911 = new TH1F("Peak911", "Peak911", nbins, xmin, 988);
-  TH1F* Peak583 = new TH1F("Peak583", "Peak583", nbins, xmin, 988);
-  TH1F* Peak338 = new TH1F("Peak338", "Peak338", nbins, xmin, 988);
-  TH1F* Peak239 = new TH1F("Peak239", "Peak239", nbins, xmin, 988);
+  TH1F* Peak2615 = new TH1F("Peak2615", "Peak2615", nbins, xmin, xmax);
+  TH1F* Peak969 = new TH1F("Peak969", "Peak969", nbins, xmin, xmax);
+  TH1F* Peak911 = new TH1F("Peak911", "Peak911", nbins, xmin, xmax);
+  TH1F* Peak583 = new TH1F("Peak583", "Peak583", nbins, xmin, xmax);
+  TH1F* Peak338 = new TH1F("Peak338", "Peak338", nbins, xmin, xmax);
+  TH1F* Peak239 = new TH1F("Peak239", "Peak239", nbins, xmin, xmax);
 
   //creating empty residual histograms for each peak
   TH1F* residuals_2615 = new TH1F("residuals_2615", "residuals_2615", nbins, xmin, xmax);
@@ -205,11 +205,10 @@ void plot_peaks(double Time)
   t239->SetBorderSize(0);
 
   //creating a unique legend for each graph for each peak
-  // TLegend *l2615 = new TLegend(0.687,0.090,0.873,0.251); //legend on comparison graph
-  TLegend *l2615 = new TLegend(0.133,0.710,0.281,.0.915);
+  TLegend *l2615 = new TLegend(0.687,0.090,0.873,0.251); 
   l2615->AddEntry(Peak2615sim,"Simulated Data");
   l2615->AddEntry(Peak2615, "Data Set 3018 Unblinded");
-  l2615->SetTextSize(0.0526);
+  l2615->SetTextSize(0.03);
   TLegend *l969 = new TLegend(0.687,0.090,0.873,0.251);
   l969->AddEntry(Peak969sim,"Simulated Data");
   l969->AddEntry(Peak969, "Data Set 3018 Unblinded");
@@ -269,12 +268,14 @@ void plot_peaks(double Time)
 
   t2615->Draw();
 
-  for (int i = 52; i <=nbins; i = i+52)
+  for (int i = 53; i <=nbins; i = i+52)
     {
       TLine *line2615 = new TLine(i,0.2,i,ymax2615+100);
       line2615->SetLineStyle(2);
       line2615->Draw("SAME");
     }
+
+  l2615->Draw();
 
   pad2c3->cd();
   residuals_2615->SetTitle("");
@@ -302,8 +303,6 @@ void plot_peaks(double Time)
     residuals_2615->SetBinContent(i, diff);
   }
   residuals_2615->Draw("P");
-
-  l2615->Draw();
 
   c3->SaveAs("../graphs/ds3018_updated/real_sim_combo_2615_wlines.pdf");
   

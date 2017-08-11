@@ -35,8 +35,9 @@ void _plotname_()
 
   //defining repeatedly used variables
   int nbins = 988;
-  int xmin = 0;
-  int xmax = 988;
+  int xmin = 1;
+  int xmax = 989;
+  int columns = 1304;
   //double ymax = 1000;
   //double ymin = 0.1;
 
@@ -49,10 +50,10 @@ void _plotname_()
   ch->Add("/nfs/cuore1/scratch/shared_output/output/ds3018_unblinded/calibration_UnblindedReduced_ds3018.list");
 
   //creating empty simulation histograms for each peak
-  TH1F* Peak2615sim = new TH1F("Peak2615sim", "Peak2615sim", nbins, 0, 988);
+  TH1F* Peak2615sim = new TH1F("Peak2615sim", "Peak2615sim", nbins, xmin, xmax);
 
   //creating empty real data histograms for each peak
-  TH1F* Peak2615 = new TH1F("Peak2615", "Peak2615", nbins, xmin, 988);
+  TH1F* Peak2615 = new TH1F("Peak2615", "Peak2615", nbins, xmin, xmax);
 
   //creating empty residual histograms for each peak
   TH1F* residuals_2615 = new TH1F("residuals_2615", "residuals_2615", nbins, xmin, xmax);
@@ -94,14 +95,14 @@ void _plotname_()
 
   //creating unique titles for each graph for each peak
   TPaveText *t2615 = new TPaveText(0.309,0.938, 0.691, 0.995, "brNDC");
-  t2615->AddText("Data and Simulation: 2615 keV peak");
+  t2615->AddText("Data and Simulation: 2615 keV peak Tower _tower_number_");
   t2615->SetTextFont(63);
   t2615->SetTextSizePixels(18);
   t2615->SetFillColor(0);
   t2615->SetBorderSize(0);
 
   //creating a unique legend for each graph for each peak
-  TLegend *l2615 = new TLegend(0.138,0.727,0.339,0.861);
+  TLegend *l2615 = new TLegend(0.685,0.174,0.887,0.307);
   l2615->AddEntry(Peak2615sim,"Simulated Data");
   l2615->AddEntry(Peak2615, "Data Set 3018 Unblinded");
   l2615->SetTextSize(0.02083);
@@ -112,11 +113,12 @@ void _plotname_()
   
   TCanvas* c3 = new TCanvas("c3", "c3", 1000, 600);
   c3->cd();
+  c3->SetLogy();
 
   Peak2615->GetXaxis()->SetLabelFont(63);
   Peak2615->GetXaxis()->SetLabelSize(14);
   Peak2615->GetXaxis()->SetRangeUser(_xstart_,_xend_);
-  Peak2615->GetXaxis()->SetNdivisions(4,kFALSE);
+  Peak2615->GetXaxis()->SetNdivisions(columns,kFALSE);
   Peak2615->GetXaxis()->SetTickLength(0.05);
   Peak2615->GetYaxis()->SetTitle("Events per Day per Channel");
   Peak2615->GetYaxis()->SetRangeUser(0.2, ymax2615+100);
@@ -133,13 +135,6 @@ void _plotname_()
 
   t2615->Draw();
   l2615->Draw();
-
-  for (int i = 52; i <=nbins; i = i+52)
-    {
-      TLine *line2615 = new TLine(i,0.2,i,ymax2615+100);
-      line2615->SetLineStyle(2);
-      line2615->Draw("SAME");
-    }
 
   c3->SaveAs("../graphs/comparison_by_tower/_plotname_.pdf");
  
